@@ -14,6 +14,7 @@ Let's go to the `interview_task` directory:
 ```
 cd interview_task
 ```
+After each task you should return to this directory before going to the next task.
 
 In this readme, I will go over the concept of my solutions and how to run them.
 The code is well documented, so you can find more details in the source code.
