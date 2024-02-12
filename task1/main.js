@@ -5,11 +5,9 @@ import OSM from 'ol/source/OSM';
 import {fromLonLat} from "ol/proj";
 import {Polygon} from "ol/geom";
 import {Vector} from "ol/layer";
-import { Vector as Vector1 } from "ol/source";
-import 'ol';
+import {Vector as Vector1} from "ol/source";
 
-
-
+// Create the map
 const map = new Map({
     target: 'map',
     layers: [
