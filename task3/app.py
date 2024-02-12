@@ -2,9 +2,17 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+err_string = """Your request must include data formated as:
+            {
+              "start_times": [10, 20, 22, 23, 25, 50, 60],
+              "end_times":   [15, 25, 25, 26, 27, 55, 65]
+            }"""
 
 @app.route('/', methods=['POST'])
 def calculate_max_interviews():
+    if 'start_times' not in request.json or 'end_times' not in request.json:
+        return jsonify({"error": err_string}), 400
+
     data = request.json
 
     start_times = data.get('start_times', [])
