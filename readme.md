@@ -40,7 +40,7 @@ python -m venv <your-env-name>
 <your-env-name>\Scripts\activate.bat
 pip install -r requirements.txt
 ```
-<i>The code above works for Windows.</i>
+<i>The second command works for Windows. If you are on Linux or Mac please use `source <your-env-name>/bin/activate`.</i>
 
 To run the code:
 ```
