@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -16,20 +18,22 @@ def check_unauthorized_sales():
         return jsonify({"error": err_string}), 400
 
     data = request.json
-    product_listings = data.get('productListings', [])
-    sales_transactions = data.get('salesTransactions', [])
+    product_listings = data['productListings']
+    sales_transactions = data['salesTransactions']
 
     unauthorized_sales = []
 
     # Create a dictionary to quickly lookup authorized sellers by productID
-    authorized_sellers_dict = {listing['productID']: listing['authorizedSellerID'] for listing in product_listings}
+    authorized_sellers_dict = defaultdict(list)
+    for listing in product_listings:
+        authorized_sellers_dict[listing['productID']].append(listing['authorizedSellerID'])
 
     for transaction in sales_transactions:
-        product_id = transaction.get('productID')
-        seller_id = transaction.get('sellerID')
+        product_id = transaction['productID']
+        seller_id = transaction['sellerID']
 
         # If productID is not found in product_listings or sellerID not in authorized_sellers
-        if product_id not in authorized_sellers_dict or seller_id != authorized_sellers_dict[product_id]:
+        if product_id not in authorized_sellers_dict or seller_id not in authorized_sellers_dict[product_id]:
             unauthorized_sales.append({"productID": product_id, "unauthorizedSellerID": [seller_id]})
 
     if len(unauthorized_sales) == 0:
